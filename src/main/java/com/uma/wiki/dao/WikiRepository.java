@@ -5,12 +5,11 @@ import com.uma.wiki.entity.WikiEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface WikiRepository extends MongoRepository<WikiRepository, ObjectId>{
-    WikiEntity findByEntryIdAndVersion(String entryId, String version);
-    void deleteByEntryIdAndVersion(String entryId, String version);
-    EntryEntity findTopByEntryIdOrderByCreationDateDesc(String entryId);
+public interface WikiRepository extends MongoRepository<WikiEntity, ObjectId>{
+    WikiEntity findByWikiId(String wikiId);
+    void deleteByWikiId(String wikiId);
 
-    EntryEntity findTopByEntryIdAndActiveIsTrue(String entryId);
+    // tambien supongo que haran falta los tipicos como pa filtrar y toda la movida esa
 
 }
 
