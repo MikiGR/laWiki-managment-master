@@ -9,6 +9,8 @@ import com.uma.wiki.exception.WikiNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 import static com.uma.wiki.mapper.WikiMapper.*;
 
 @Service
@@ -17,23 +19,42 @@ public class WikiService {
     @Autowired
     private WikiRepository wikiRepository;
 
-
-    public WikiResponseDTO getWiki(String entryId){
-        WikiEntity wikiEntity = this.wikiRepository.findByWikiId(entryId);
+    public WikiResponseDTO getWikiByDate(LocalDateTime date) {
+        WikiEntity wikiEntity = this.wikiRepository.findByDate(date);
 
         if (wikiEntity == null) {
-            throw new WikiNotFoundException("Entry with ID " + entryId + " doesn't exist in DB");
+            throw new WikiNotFoundException("No Wikis at date:  " + date );
         }
 
         return toResponseDto(wikiEntity);
     }
 
-    public void deleteWiki(String entryId){
-        WikiEntity wikiEntity = this.wikiRepository.findByWikiId(entryId);
-        if (wikiEntity == null)
-            throw new WikiNotFoundException("object doesn't exist in DB");
+    public WikiResponseDTO getWikiByTitle(String title) {
+        WikiEntity wikiEntity = this.wikiRepository.findByTitle(title);
 
-        this.wikiRepository.deleteByWikiId(entryId);
+        if (wikiEntity == null) {
+            throw new WikiNotFoundException("No Wiki with title:  " + title );
+        }
+
+        return toResponseDto(wikiEntity);
+    }
+
+    public WikiResponseDTO getWiki(String wikiId){
+        WikiEntity wikiEntity = this.wikiRepository.findByWikiId(wikiId);
+
+        if (wikiEntity == null) {
+            throw new WikiNotFoundException("Wiki with ID " + wikiId + " doesn't exist in DB");
+        }
+
+        return toResponseDto(wikiEntity);
+    }
+
+    public void deleteWiki(String wikiId){
+        WikiEntity wikiEntity = this.wikiRepository.findByWikiId(wikiId);
+        if (wikiEntity == null)
+            throw new WikiNotFoundException("Wiki "+wikiId+" doesn't exist in DB");
+
+        this.wikiRepository.deleteByWikiId(wikiId);
     }
 
     public WikiResponseDTO createWiki(WikiCreateDTO wikiCreateDto) {

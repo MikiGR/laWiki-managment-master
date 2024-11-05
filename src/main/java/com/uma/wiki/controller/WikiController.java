@@ -22,6 +22,41 @@ public class WikiController {
 
     // De momemento vamos a hacer los metodos para el CRUD de una wiki
     // no he incluido el UPDATE del crud ya que no se si se actualiza una wiki como tal o si eso es tarea de las entradas
+/*
+    @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @GetMapping
+    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWikiByDate(@RequestParam("wikiId") String wikiId) {
+        try {
+            WikiResponseDTO wikiResponseDTO = wikiService.getWiki(wikiId);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseWrapper<>(wikiResponseDTO, HttpStatus.OK.value(), "Wiki retrieved successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving entry"));
+        }
+    }
+    */
+
+    @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @GetMapping
+    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWikiByTitle(@RequestParam("title") String title) {
+        try {
+            WikiResponseDTO wikiResponseDTO = wikiService.getWikiByTitle(title);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseWrapper<>(wikiResponseDTO, HttpStatus.OK.value(), "Wiki retrieved successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving entry"));
+        }
+    }
 
     // leer una wiki
     @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
