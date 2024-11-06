@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "fcb980cd-41bc-4e96-a327-b306c2bbff96",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39506443"
+	},
+	"item": [
+		{
+			"name": "Create Wiki",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"title\": \"Historia de la Computación\",\n   \"description\": \"La historia de la computación comienza en la década de 1940...\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/v1/wiki"
+			},
+			"response": []
+		},
+		{
+			"name": "Get By Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Wiki",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Update Wiki",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wikiId\": \"009f795e-73f2-4e4b-bbe5-90bbee1f4a3d\",\n    \"title\": \"Hola 333 \",\n    \"description\": \"P3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "?wikiId=009f795e-73f2-4e4b-bbe5-90bbee1f4a3d",
+					"query": [
+						{
+							"key": "wikiId",
+							"value": "009f795e-73f2-4e4b-bbe5-90bbee1f4a3d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "description",
+			"value": "HOLA"
+		}
+	]
+}
