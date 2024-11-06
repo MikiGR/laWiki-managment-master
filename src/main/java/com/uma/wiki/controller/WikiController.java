@@ -25,9 +25,6 @@ public class WikiController {
     @Autowired
     WikiService wikiService;
     @Qualifier("defaultServletHandlerMapping")
-    @Autowired
-    private HandlerMapping defaultServletHandlerMapping;
-
 
     /** Devuelve una lista de todas las Wikis .
      *
