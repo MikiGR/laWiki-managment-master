@@ -9,9 +9,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +24,9 @@ public class WikiController {
 
     @Autowired
     WikiService wikiService;
+    @Qualifier("defaultServletHandlerMapping")
+    @Autowired
+    private HandlerMapping defaultServletHandlerMapping;
 
 
     /** Devuelve una lista de todas las Wikis .
@@ -45,7 +50,7 @@ public class WikiController {
         }
     }
 
-    /** Coge una Wiki por su ID
+    /** Coge todas las wikis que contengan el título pasado por parámetros
      *
      * @param title
      * @return
@@ -55,10 +60,10 @@ public class WikiController {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping("/find")
-    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWikiByTitle(@RequestParam("title") String title) {
+    @GetMapping("/findByTitle")
+    public ResponseEntity<ResponseWrapper<List<WikiResponseDTO>>> getWikiByTitle(@RequestParam("title") String title) {
         try {
-            WikiResponseDTO wikiResponseDTO = wikiService.getWikiByTitle(title);
+            List<WikiResponseDTO> wikiResponseDTO = wikiService.getWikiByTitle(title);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseWrapper<>(wikiResponseDTO, HttpStatus.OK.value(), "Wiki retrieved successfully"));
         } catch (Exception e) {
@@ -67,25 +72,25 @@ public class WikiController {
         }
     }
 
-    /** Coge una Wiki por su titulo
+    /** Coge todas las wikis que contengan la descripción pasado por parámetros
      *
-     * @param wikiId
+     * @param description
      * @return
      */
-    @Operation(summary = "Get a wiki by title", description = "Returns an wiki based on its title")
+    @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping("/find/id")
-    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWiki(@RequestParam("id") String wikiId) {
+    @GetMapping("/findByDescription")
+    public ResponseEntity<ResponseWrapper<List<WikiResponseDTO>>> getWikiByDescription(@RequestParam("description") String description) {
         try {
-            WikiResponseDTO wikiResponseDTO = wikiService.getWiki(wikiId);
+            List<WikiResponseDTO> wikiResponseDTO = wikiService.getWikiByDescription(description);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseWrapper<>(wikiResponseDTO, HttpStatus.OK.value(), "Wiki retrieved successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving entry"));
+                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving wiki"));
         }
     }
 

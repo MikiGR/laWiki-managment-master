@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface WikiRepository extends MongoRepository<WikiEntity, ObjectId>{
     WikiEntity findByWikiId(String wikiId);
@@ -18,8 +19,10 @@ public interface WikiRepository extends MongoRepository<WikiEntity, ObjectId>{
     @Query("SELECT w FROM Wiki w WHERE w.creationDate = :date")
     WikiEntity findByDate(@Param("date") LocalDateTime date);
 
-    @Query("SELECT w FROM Wiki w WHERE w.title like(:title)")
-    WikiEntity findByTitle(@Param("title") String title);
+    @Query("SELECT w FROM Wiki w WHERE w.title LIKE CONCAT('%',:title,'%')")
+    List<WikiEntity> findByTitle(@Param("title") String title);
 
+    @Query("SELECT w FROM Wiki w WHERE w.description LIKE CONCAT('%',:description,'%')")
+    List<WikiEntity> findByDescription(@Param("description") String description);
 }
 

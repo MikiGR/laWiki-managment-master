@@ -39,14 +39,22 @@ public class WikiService {
         return toResponseDto(wikiEntities);
     }
 
-    public WikiResponseDTO getWikiByTitle(String title) {
-        WikiEntity wikiEntity = this.wikiRepository.findByTitle(title);
-
-        if (wikiEntity == null) {
-            throw new WikiNotFoundException("No Wiki with title:  " + title );
+    public List<WikiResponseDTO> getWikiByTitle(String title) {
+        List<WikiEntity> wikiEntities = this.wikiRepository.findByTitle(title);
+        if(wikiEntities.isEmpty()){
+            throw new WikiNotFoundException("No Wikis titled: " + title);
         }
 
-        return toResponseDto(wikiEntity);
+        return toResponseDto(wikiEntities);
+    }
+
+    public List<WikiResponseDTO> getWikiByDescription(String description) {
+        List<WikiEntity> wikiEntities = this.wikiRepository.findByDescription(description);
+        if(wikiEntities.isEmpty()){
+            throw new WikiNotFoundException("No Wikis with description: " + description);
+        }
+
+        return toResponseDto(wikiEntities);
     }
 
     public WikiResponseDTO getWiki(String wikiId){
