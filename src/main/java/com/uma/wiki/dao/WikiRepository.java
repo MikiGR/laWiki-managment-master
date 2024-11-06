@@ -19,10 +19,10 @@ public interface WikiRepository extends MongoRepository<WikiEntity, ObjectId>{
     @Query("SELECT w FROM Wiki w WHERE w.creationDate = :date")
     WikiEntity findByDate(@Param("date") LocalDateTime date);
 
-    @Query("SELECT w FROM Wiki w WHERE w.title LIKE CONCAT('%',:title,'%')")
+    @Query("{ 'title': { $regex: ?0, $options: 'i' } }")
     List<WikiEntity> findByTitle(@Param("title") String title);
 
-    @Query("SELECT w FROM Wiki w WHERE w.description LIKE CONCAT('%',:description,'%')")
+    @Query("{ 'description':  {$regex:  ?0, $options:  'i'}}")
     List<WikiEntity> findByDescription(@Param("description") String description);
 }
 
