@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "comments")
+@Document(collection = "wiki")
 public class WikiEntity {
 
     @MongoId

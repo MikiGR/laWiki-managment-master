@@ -46,7 +46,7 @@ public class WikiController {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping
+    @GetMapping("/title")
     public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWikiByTitle(@RequestParam("title") String title) {
         try {
             WikiResponseDTO wikiResponseDTO = wikiService.getWikiByTitle(title);
@@ -54,7 +54,7 @@ public class WikiController {
                     .body(new ResponseWrapper<>(wikiResponseDTO, HttpStatus.OK.value(), "Wiki retrieved successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving entry"));
+                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving wiki"));
         }
     }
 
@@ -64,8 +64,8 @@ public class WikiController {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping
-    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWiki(@RequestParam("wikiId") String wikiId) {
+    @GetMapping("/")
+    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWiki(@RequestParam("id") String wikiId) {
         try {
             WikiResponseDTO wikiResponseDTO = wikiService.getWiki(wikiId);
             return ResponseEntity.status(HttpStatus.OK)
