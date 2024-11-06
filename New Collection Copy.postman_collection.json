@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "131f75d8-c160-4880-b690-16e31c069c9f",
+		"name": "New Collection Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39035111"
+	},
+	"item": [
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/wiki/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Wiki",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"title\": \"Casa verde\",\n   \"description\": \"esto es una casa verde\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/wiki",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Wiki",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wikiId\": \"60539536-20f9-4483-968d-81e8d2e6f666\",\n    \"title\": \"Casa 1\",\n    \"description\": \"bauhaus\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/wiki",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Wiki",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/wiki",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by title",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/wiki/findByTitle?title=azul",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki",
+						"findByTitle"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "azul"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by description",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/wiki/findByDescription?description=azul",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki",
+						"findByDescription"
+					],
+					"query": [
+						{
+							"key": "description",
+							"value": "azul"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cosas_wiki_postman",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/wiki/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"wiki",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "description",
+			"value": "HOLA"
+		}
+	]
+}
