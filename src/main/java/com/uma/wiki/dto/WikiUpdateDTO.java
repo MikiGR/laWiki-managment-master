@@ -1,27 +1,25 @@
 package com.uma.wiki.dto;
 
-import com.uma.wiki.entity.CommentEntity;
 import com.uma.wiki.entity.EntryEntity;
 import com.uma.wiki.entity.UserEntity;
-import com.uma.wiki.entity.WikiEntity;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
-public class WikiResponseDTO {
+public class WikiUpdateDTO {
     @NotNull
     private String wikiId;
 
     @NotNull
     private String title;
 
-    @NotNull
     private String description;
 
     //@NotNull desactivado porque todavia no esta modelado
@@ -30,6 +28,5 @@ public class WikiResponseDTO {
     private LocalDateTime creationDate;
 
     private UserEntity userEntity;
-
 
 }

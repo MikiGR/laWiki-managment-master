@@ -2,7 +2,6 @@ package com.uma.wiki.entity;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.apache.catalina.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -36,11 +35,11 @@ public class WikiEntity {
 
     private LocalDateTime creationDate;
 
-    @NotNull
+    //@NotNull
     private UserEntity userEntity;
 
 
-    public WikiEntity(UserEntity userEntity,String title, String description,List<EntryEntity> entryEntities, String wikiId) {
+    public WikiEntity(String wikiId,String title, String description,List<EntryEntity> entryEntities, UserEntity userEntity) {
         this.id = new ObjectId();
         this.wikiId = validateWikiId(wikiId) ? wikiId : null ;
         this.userEntity = userEntity;
@@ -50,7 +49,7 @@ public class WikiEntity {
         this.entryEntities = entryEntities;
     }
 
-    public WikiEntity(UserEntity userEntity,String title, String description,List<EntryEntity> entryEntities) {
+    public WikiEntity(String title, String description,List<EntryEntity> entryEntities,UserEntity userEntity) {
         this.id = new ObjectId();
         this.wikiId = UUID.randomUUID().toString();
         this.userEntity = userEntity;

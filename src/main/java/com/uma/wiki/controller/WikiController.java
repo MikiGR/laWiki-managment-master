@@ -13,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @RequestMapping("/v1/wiki")
 @RestController
 public class WikiController {
@@ -20,33 +23,39 @@ public class WikiController {
     @Autowired
     WikiService wikiService;
 
-    // De momemento vamos a hacer los metodos para el CRUD de una wiki
-    // no he incluido el UPDATE del crud ya que no se si se actualiza una wiki como tal o si eso es tarea de las entradas
-/*
-    @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
+
+    /** Devuelve una lista de todas las Wikis .
+     *
+     * @return
+     */
+    @Operation(summary = "Get all the wikis", description = "Returns list of wikis")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
+            @ApiResponse(responseCode = "200", description = "Wikis founded", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping
-    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWikiByDate(@RequestParam("wikiId") String wikiId) {
+    @GetMapping("/")
+    public ResponseEntity<ResponseWrapper<List<WikiResponseDTO>>> getWikiByTitle() {
         try {
-            WikiResponseDTO wikiResponseDTO = wikiService.getWiki(wikiId);
+            List<WikiResponseDTO> wikiResponseDTO = wikiService.getAllWikis();
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseWrapper<>(wikiResponseDTO, HttpStatus.OK.value(), "Wiki retrieved successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving entry"));
+                    .body(new ResponseWrapper<>(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error retrieving wiki"));
         }
     }
-    */
 
+    /** Coge una Wiki por su ID
+     *
+     * @param title
+     * @return
+     */
     @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping("/title")
+    @GetMapping("/find")
     public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWikiByTitle(@RequestParam("title") String title) {
         try {
             WikiResponseDTO wikiResponseDTO = wikiService.getWikiByTitle(title);
@@ -58,13 +67,17 @@ public class WikiController {
         }
     }
 
-    // leer una wiki
-    @Operation(summary = "Get a wiki by ID", description = "Returns an wiki based on its ID")
+    /** Coge una Wiki por su titulo
+     *
+     * @param wikiId
+     * @return
+     */
+    @Operation(summary = "Get a wiki by title", description = "Returns an wiki based on its title")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    @GetMapping("/")
+    @GetMapping("/find/id")
     public ResponseEntity<ResponseWrapper<WikiResponseDTO>> getWiki(@RequestParam("id") String wikiId) {
         try {
             WikiResponseDTO wikiResponseDTO = wikiService.getWiki(wikiId);
@@ -88,6 +101,20 @@ public class WikiController {
         WikiResponseDTO newWikiResponseDTO = wikiService.createWiki(wikiCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseWrapper<>(newWikiResponseDTO, HttpStatus.CREATED.value(), "Wiki created successfully"));
+    }
+
+    // update una wiki
+    @Operation(summary = "Update a new wiki", description = "Updates a wiki in the database")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Wiki updated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input provided", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @PutMapping
+    public ResponseEntity<ResponseWrapper<WikiResponseDTO>> updateWiki(@Valid @RequestBody WikiUpdateDTO wikiUpdateDto) {
+        WikiResponseDTO newWikiResponseDTO = wikiService.updateWiki(wikiUpdateDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseWrapper<>(newWikiResponseDTO, HttpStatus.CREATED.value(), "Wiki updated successfully"));
     }
 
     // borra una wiki

@@ -4,6 +4,9 @@ import com.uma.wiki.dto.*;
 import com.uma.wiki.entity.WikiEntity;
 import lombok.experimental.UtilityClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @UtilityClass
 public class WikiMapper {
 
@@ -14,36 +17,31 @@ public class WikiMapper {
 
         WikiResponseDTO dto = new WikiResponseDTO();
         // aqui iria ahora los atributos de una wiki, se hace set a todos, por ejemplo:
-       // dto.setEntryId(entryEntity.getEntryId());
-       // dto.setVersion(entryEntity.getVersion());
-
-
-
-        // Si tienes comentarios, conviértelos aquí usando un método similar
-        // dto.setCommentEntities(convertCommentsToDto(entryEntity.getCommentEntities()));
-
+        dto.setWikiId(wikiEntity.getWikiId());
+        dto.setTitle(wikiEntity.getTitle());
+        dto.setDescription(wikiEntity.getDescription());
+        dto.setEntries(wikiEntity.getEntryEntities());
+        dto.setUserEntity(wikiEntity.getUserEntity());
+        dto.setCreationDate(wikiEntity.getCreationDate());
         return dto;
     }
 
-    // NO SE SI SE PUEDE ACTUALIZAR UNA WIKI O SI YA ES TEMA DE LA ENTITY ENTRADA
-    public static WikiEntity toEntityInUpdate(WikiCreateDTO wikiCreateDto) {
-        if (wikiCreateDto == null) {
-            return null;
-        }
+    public static List<WikiResponseDTO> toResponseDto(List<WikiEntity> wikiEntities) {
+            List<WikiResponseDTO> wikiResponseDTOList = new ArrayList<>();
 
-        WikiEntity wikiEntity = new WikiEntity(/* aqui haces get de los atributos del dto pasado por parametro*/);
+            for(WikiEntity wikiEntity : wikiEntities){
+                wikiResponseDTOList.add(toResponseDto(wikiEntity));
+            }
 
+        return wikiResponseDTOList;
+    }
 
-        return wikiEntity;
-    }// este se usa pa crear una wiki
     public static WikiEntity toEntityInCreation(WikiCreateDTO wikiCreateDto) {
         if (wikiCreateDto == null) {
             return null;
         }
 
-        WikiEntity wikiEntity = new WikiEntity(/* aqui haces get de los atributos del dto pasado por parametro*/);
-
-        return wikiEntity;
+        return new WikiEntity(wikiCreateDto.getTitle(), wikiCreateDto.getDescription(),wikiCreateDto.getEntries(),wikiCreateDto.getUserEntity());
     }
 
 }
