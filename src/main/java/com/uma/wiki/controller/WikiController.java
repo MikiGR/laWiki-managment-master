@@ -36,7 +36,7 @@ public class WikiController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     @GetMapping("/")
-    public ResponseEntity<ResponseWrapper<List<WikiResponseDTO>>> getWikiByTitle() {
+    public ResponseEntity<ResponseWrapper<List<WikiResponseDTO>>> getAllWikis() {
         try {
             List<WikiResponseDTO> wikiResponseDTO = wikiService.getAllWikis();
             return ResponseEntity.status(HttpStatus.OK)
