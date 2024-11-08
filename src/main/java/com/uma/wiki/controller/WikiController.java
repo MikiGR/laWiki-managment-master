@@ -52,7 +52,7 @@ public class WikiController {
      * @param title
      * @return
      */
-    @Operation(summary = "Get a wiki by title", description = "Returns an wiki based on its title")
+    @Operation(summary = "Get a wiki by title", description = "Returns an wiki based on its title ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Wiki found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseWrapper.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
